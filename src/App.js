@@ -2,14 +2,20 @@ import "./App.css";
 import Header from "./components/Header";
 import Addform from "./components/Addform";
 import Item from "./components/Item";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 function App() {
-  const [tasks, setTasks] = useState([
-    { id: 1, title: "บอกจารโก้ว่าใส่เสื้อช็อปได้" },
-    { id: 2, title: "เจ๊ติ๋มปิดวันพฤหัส" },
-  ]);
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem("task")) || []
+  );
   const [title, setTitle] = useState("");
   const [editId, setEditid] = useState(null);
+  const [theme, setTheme] = useState("light");
+  // รูปแบบที่ 1 เมื่อมีการเปลี่ยนแปลง state  ทุกๆการกระทำจะทำการ useEffect ทุกครั้ง
+  // วิธีการเก็บผลลัพธ์ลงไปใน localStorage ทำให้ Refresh แล้วไม่หาย
+  useEffect(() => {
+    localStorage.setItem("task", JSON.stringify(tasks));
+  }, [tasks]);
   function deleteTask(id) {
     const result = tasks.filter((Item) => Item.id !== id);
     setTasks(result);
@@ -47,8 +53,8 @@ function App() {
     }
   }
   return (
-    <div className="App">
-      <Header />
+    <div className={"App " + theme}>
+      <Header theme={theme} setTheme={setTheme} />
       <div className="Container">
         <Addform
           title={title}

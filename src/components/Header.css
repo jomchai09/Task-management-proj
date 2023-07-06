@@ -21,8 +21,12 @@ header{
 
 .theme-container{
     font-size: 20px;
-  
+   
     cursor: pointer;
-    margin-left: 10px;
+}
+
+.theme-status{
+    font-size: 20px;
+   margin-right: 20px;
 
 }
